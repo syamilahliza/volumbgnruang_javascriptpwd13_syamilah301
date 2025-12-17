@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Volume Bangun Ruang</title>
+    <style>
+       * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #aaea66 0%, #4fa24b 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #78ea66;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        select, input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            border-color: #66ea9f;
+        }
+        
+        .input-fields {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .input-fields.active {
+            display: block;
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #8eea66 0%, #4ba251 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 20px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+        }
+        
+        .result.show {
+            display: block;
+        }
+        
+        .result h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .result p {
+            font-size: 24px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        footer {
+                text-align: center;
+                padding: 10px 0;
+                margin-top: 20px;
+                font-size: 14px;
+                color: #666;
+                opacity: 45%;
+
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kalkulator Volume Bangun Ruang</h1>
+        
+        <div class="form-group">
+            <label for="shape">Pilih Bangun Ruang:</label>
+            <select id="shape" onchange="showInputs()">
+                <option value="">-- Pilih Bangun Ruang --</option>
+                <option value="balok">Balok</option>
+                <option value="tabung">Tabung</option>
+                <option value="bola">Bola</option>
+                <option value="prisma">Prisma Segitiga</option>
+                <option value="kerucut">Kerucut</option>
+            </select>
+        </div>
+
+        <div id="balok" class="input-fields">
+            <div class="form-group">
+                <label for="panjang">Panjang:</label>
+                <input type="number" id="panjang" step="0.01" placeholder="Masukkan panjang">
+            </div>
+            <div class="form-group">
+                <label for="lebar">Lebar:</label>
+                <input type="number" id="lebar" step="0.01" placeholder="Masukkan lebar">
+            </div>
+            <div class="form-group">
+                <label for="tinggi_balok">Tinggi:</label>
+                <input type="number" id="tinggi_balok" step="0.01" placeholder="Masukkan tinggi">
+            </div>
+        </div>
+
+        <div id="tabung" class="input-fields">
+            <div class="form-group">
+                <label for="jari_tabung">Jari-jari:</label>
+                <input type="number" id="jari_tabung" step="0.01" placeholder="Masukkan jari-jari">
+            </div>
+            <div class="form-group">
+                <label for="tinggi_tabung">Tinggi:</label>
+                <input type="number" id="tinggi_tabung" step="0.01" placeholder="Masukkan tinggi">
+            </div>
+        </div>
+
+        <div id="bola" class="input-fields">
+            <div class="form-group">
+                <label for="jari_bola">Jari-jari:</label>
+                <input type="number" id="jari_bola" step="0.01" placeholder="Masukkan jari-jari">
+            </div>
+        </div>
+
+        <div id="prisma" class="input-fields">
+            <div class="form-group">
+                <label for="tinggi_alas">Tinggi Alas Segitiga:</label>
+                <input type="number" id="tinggi_alas" step="0.01" placeholder="Masukkan tinggi alas">
+            </div>
+            <div class="form-group">
+                <label for="panjang_alas">Panjang Alas Segitiga:</label>
+                <input type="number" id="panjang_alas" step="0.01" placeholder="Masukkan panjang alas">
+            </div>
+            <div class="form-group">
+                <label for="tinggi_prisma">Tinggi Prisma:</label>
+                <input type="number" id="tinggi_prisma" step="0.01" placeholder="Masukkan tinggi prisma">
+            </div>
+        </div>
+
+        <div id="kerucut" class="input-fields">
+            <div class="form-group">
+                <label for="jari_kerucut">Jari-jari Alas:</label>
+                <input type="number" id="jari_kerucut" step="0.01" placeholder="Masukkan jari-jari alas">
+            </div>
+            <div class="form-group">
+                <label for="tinggi_kerucut">Tinggi Kerucut:</label>
+                <input type="number" id="tinggi_kerucut" step="0.01" placeholder="Masukkan tinggi">
+            </div>
+        </div>
+
+        <button onclick="hitungVolume()">Hitung Volume</button>
+
+        <div class="result" id="result">
+            <h3>Hasil Perhitungan:</h3>
+            <p id="resultText"></p>
+        </div>
+
+        <footer>
+            <p>Pemrograman Web Dasar Pertemuan 13 - R3F 202433500301 Syamilah Aprilliza</p>
+        </footer>
+    </div>
+
+    <script>
+        function showInputs() {
+            const shape = document.getElementById('shape').value;
+            const allInputs = document.querySelectorAll('.input-fields');
+            const result = document.getElementById('result');
+            
+            allInputs.forEach(input => input.classList.remove('active'));
+            result.classList.remove('show');
+            
+            if (shape) {
+                document.getElementById(shape).classList.add('active');
+            }
+        }
+
+        function hitungVolume() {
+            const shape = document.getElementById('shape').value;
+            let volume = 0;
+            let valid = true;
+
+            if (!shape) {
+                alert('Silakan pilih bangun ruang terlebih dahulu!');
+                return;
+            }
+
+            switch(shape) {
+                case 'balok':
+                    const p = parseFloat(document.getElementById('panjang').value);
+                    const l = parseFloat(document.getElementById('lebar').value);
+                    const t_balok = parseFloat(document.getElementById('tinggi_balok').value);
+                    
+                    if (!p || !l || !t_balok || p <= 0 || l <= 0 || t_balok <= 0) {
+                        valid = false;
+                    } else {
+                        volume = p * l * t_balok;
+                    }
+                    break;
+
+                case 'tabung':
+                    const r_tabung = parseFloat(document.getElementById('jari_tabung').value);
+                    const t_tabung = parseFloat(document.getElementById('tinggi_tabung').value);
+                    
+                    if (!r_tabung || !t_tabung || r_tabung <= 0 || t_tabung <= 0) {
+                        valid = false;
+                    } else {
+                        volume = 3.14 * r_tabung * r_tabung * t_tabung;
+                    }
+                    break;
+
+                case 'bola':
+                    const r_bola = parseFloat(document.getElementById('jari_bola').value);
+                    
+                    if (!r_bola || r_bola <= 0) {
+                        valid = false;
+                    } else {
+                        volume = 3.14 * r_bola * r_bola * r_bola;
+                    }
+                    break;
+
+                case 'prisma':
+                    const t_alas = parseFloat(document.getElementById('tinggi_alas').value);
+                    const p_alas = parseFloat(document.getElementById('panjang_alas').value);
+                    const t_prisma = parseFloat(document.getElementById('tinggi_prisma').value);
+                    
+                    if (!t_alas || !p_alas || !t_prisma || t_alas <= 0 || p_alas <= 0 || t_prisma <= 0) {
+                        valid = false;
+                    } else {
+                        volume = 0.5 * t_alas * p_alas * t_prisma;
+                    }
+                    break;
+
+                case 'kerucut':
+                    const r_kerucut = parseFloat(document.getElementById('jari_kerucut').value);
+                    const t_kerucut = parseFloat(document.getElementById('tinggi_kerucut').value);
+                    
+                    if (!r_kerucut || !t_kerucut || r_kerucut <= 0 || t_kerucut <= 0) {
+                        valid = false;
+                    } else {
+                        volume = (1/3) * 3.14 * r_kerucut * r_kerucut * t_kerucut;
+                    }
+                    break;
+            }
+
+            if (!valid) {
+                alert('Harap masukkan semua nilai dengan benar (harus lebih dari 0)!');
+                return;
+            }
+
+            const resultDiv = document.getElementById('result');
+            const resultText = document.getElementById('resultText');
+            
+            resultText.textContent = volume.toFixed(2) + ' satuan³';
+            resultDiv.classList.add('show');
+            
+            alert(`Volume ${shape.charAt(0).toUpperCase() + shape.slice(1)} adalah: ${volume.toFixed(2)} satuan³`);
+        }
+    </script>
+</body>
+</html>
